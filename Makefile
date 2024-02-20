@@ -26,3 +26,6 @@ generate-chat-api:
 	--go-grpc_out=pkg/chat_v1 --go-grpc_opt=paths=source_relative \
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	api/chat_v1/chat.proto
+
+docker-build-and-push:
+	docker buildx build --no-cache --platform linux/amd64 -t REGESTRY/
