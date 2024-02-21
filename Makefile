@@ -27,5 +27,13 @@ generate-chat-api:
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	api/chat_v1/chat.proto
 
+build:
+	GOOS=linux GOARCH=amd64 go build -o service_linux cmd/grpc_server/main.go
+
+copy-to-server:
+	scp service_linux root@31.129.33.188:
+
 docker-build-and-push:
-	docker buildx build --no-cache --platform linux/amd64 -t REGESTRY/
+	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/github/chat-server:v0.0.1 .
+	docker login -u token -p CRgAAAAApnpgjELi4YJwGUDcaIei0x62XkrajEPB cr.selcloud.ru/github
+	docker push cr.selcloud.ru/github/chat-server:v0.0.1
