@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/brianvoe/gofakeit/v6"
+	"github.com/brianvoe/gofakeit"
 	"github.com/dmtrybogdanov/chat-server/pkg/chat_v1"
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
@@ -49,6 +49,8 @@ func main() {
 	s := grpc.NewServer()
 	reflection.Register(s)
 	chat_v1.RegisterChatV1Server(s, &server{})
+
+	log.Printf("server listening at %v", lis.Addr())
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
